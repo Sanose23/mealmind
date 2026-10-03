@@ -1,0 +1,8 @@
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) {
+  .site-header { flex-wrap: wrap; padding: .75rem 1rem; }
+  .search { order: 3; flex-basis: 100%; max-width: none; }
+  main { padding: 1rem; }
+  .grid, .detail { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

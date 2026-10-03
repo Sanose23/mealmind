@@ -1,0 +1,36 @@
+:root { --green: #2E7D32; --orange: #F57C00; --dark: #212121; --light: #F9F9F9; --border: #e2e2e2; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Inter", "Roboto", sans-serif; color: var(--dark); background: var(--light); line-height: 1.5; }
+h1, h2, .logo { font-family: "Poppins", sans-serif; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+.site-header { display: flex; align-items: center; gap: 1rem; padding: .75rem 1.5rem; background: var(--green); color: #fff; }
+.logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
+.search { flex: 1; display: flex; gap: .5rem; max-width: 560px; }
+.search input { flex: 1; padding: .6rem .8rem; border: 0; border-radius: 6px; font: inherit; }
+button, .view, .back { font: inherit; cursor: pointer; border-radius: 6px; padding: .55rem 1rem; border: 2px solid transparent; }
+.search button { background: var(--orange); color: #fff; font-weight: 600; }
+nav button, .back { background: transparent; color: #fff; border-color: #fff; text-decoration: none; }
+nav button[aria-pressed="true"] { background: #fff; color: var(--green); }
+
+main { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+.filters { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+.filters select { padding: .5rem; font: inherit; border-radius: 6px; border: 1px solid var(--border); }
+#status { min-height: 1.5rem; color: #555; }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+.card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.card-body { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; flex: 1; }
+.card h2 { font-size: 1.05rem; margin: 0 0 .25rem; }
+.meta { margin: 0 0 .75rem; color: #666; font-size: .9rem; }
+.actions { display: flex; gap: .5rem; margin-top: auto; }
+.save { background: #fff; color: var(--green); border-color: var(--green); }
+.save.on { background: var(--green); color: #fff; }
+.view { background: var(--orange); color: #fff; text-decoration: none; font-weight: 600; }
+
+.detail { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.detail img { width: 100%; border-radius: 10px; }
+.detail h1 { margin: 0 0 .25rem; }
+.instructions { grid-column: 1 / -1; max-width: 70ch; }

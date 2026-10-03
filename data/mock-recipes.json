@@ -1,0 +1,10 @@
+{ "recipes": [
+  { "id": "52940", "title": "Brown Stew Chicken", "image": "https://www.themealdb.com/images/media/meals/sypxpx1515365095.jpg",
+    "category": "Chicken", "area": "Jamaican",
+    "instructions": "Squeeze lime over chicken and season with salt and pepper.\nBrown the chicken in oil, then add vegetables and water.\nSimmer until the chicken is tender and the sauce thickens.",
+    "ingredients": [ {"name":"Chicken","measure":"1 whole"}, {"name":"Tomato","measure":"1 chopped"}, {"name":"Onion","measure":"1 chopped"}, {"name":"Carrots","measure":"1 cup"} ] },
+  { "id": "52771", "title": "Spicy Arrabiata Penne", "image": "https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg",
+    "category": "Vegetarian", "area": "Italian",
+    "instructions": "Boil the penne until al dente.\nSimmer garlic, chilli and tomatoes into a sauce.\nToss the pasta in the sauce and serve.",
+    "ingredients": [ {"name":"Penne","measure":"1 pound"}, {"name":"Garlic","measure":"3 cloves"}, {"name":"Tomatoes","measure":"1 tin"}, {"name":"Chilli","measure":"1/2 tsp"} ] }
+] }
