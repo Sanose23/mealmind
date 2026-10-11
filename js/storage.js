@@ -20,3 +20,17 @@ export function toggleFavorite(recipe) {
   write(FAV_KEY, next);
   return next;
 }
+
+// ---- Meal plan + grocery checklist ----
+const PLAN_KEY = "mealmind:plan";
+const CHECK_KEY = "mealmind:grocery-checked";
+export const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+export function getPlan() {
+  const plan = read(PLAN_KEY, {});
+  DAYS.forEach((d) => { if (!Array.isArray(plan[d])) plan[d] = []; });
+  return plan;
+}
+export const savePlan = (plan) => write(PLAN_KEY, plan);
+export const getChecked = () => read(CHECK_KEY, []);
+export const saveChecked = (list) => write(CHECK_KEY, list);

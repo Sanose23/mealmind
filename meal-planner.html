@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meal Planner – MealMind</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">MealMind</a>
+    <nav><a class="back" href="index.html">Find recipes</a></nav>
+  </header>
+  <main>
+    <div class="page-head"><h1>Weekly meal planner</h1><button type="button" id="clear-plan" class="save">Clear week</button></div>
+    <div id="plan-grid" class="plan-grid"></div>
+    <h2 class="grocery-title">Grocery list</h2>
+    <ul id="grocery-list" class="grocery"></ul>
+  </main>
+  <script type="module" src="js/planner.js"></script>
+</body>
+</html>

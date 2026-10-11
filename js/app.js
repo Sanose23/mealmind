@@ -1,7 +1,8 @@
 // app.js – page logic. One module serves both index.html and recipe-details.html.
 import { getCategories, searchRecipes, filterByCategory, getRecipe,
          getFallbackRecipes, getFallbackRecipe } from "./api.js";
-import { getFavorites, isFavorite, toggleFavorite } from "./storage.js";
+import { addToPlan, scaleMeasure, BASE_SERVINGS } from "./planner.js";
+import { DAYS, getFavorites, isFavorite, toggleFavorite } from "./storage.js";
 
 const $ = (sel) => document.querySelector(sel);
 const status = (msg) => { const el = $("#status"); if (el) el.textContent = msg; };
@@ -92,6 +93,13 @@ async function initHome() {
 }
 
 /* ---------- Detail page ---------- */
+function renderIngredients(r, servings) {
+  const factor = servings / BASE_SERVINGS;
+  $("#ingredient-list").innerHTML = r.ingredients.map((i) =>
+    `<li>${esc(scaleMeasure(i.measure, factor))} ${esc(i.name)}</li>`).join("")
+    || "<li>Ingredient details not available.</li>";
+}
+
 async function initDetail() {
   const id = new URLSearchParams(location.search).get("id");
   if (!id) { status("No recipe selected. Go back to search and pick one."); return; }
@@ -106,13 +114,26 @@ async function initDetail() {
     <div>
       <h1>${esc(r.title)}</h1>
       <p class="meta">${esc([r.category, r.area].filter(Boolean).join(" • "))}</p>
+      <div class="controls">
+        <label>Servings <input id="servings" type="number" min="1" max="20" value="${BASE_SERVINGS}"></label>
+        <label>Day <select id="plan-day">${DAYS.map((d) => `<option>${d}</option>`).join("")}</select></label>
+        <button type="button" id="add-plan" class="view">Add to meal plan</button>
+      </div>
       <h2>Ingredients</h2>
-      <ul>${r.ingredients.map((i) => `<li>${esc(i.measure)} ${esc(i.name)}</li>`).join("") || "<li>Ingredient details not available.</li>"}</ul>
+      <ul id="ingredient-list"></ul>
     </div>
     <div class="instructions">
       <h2>Instructions</h2>
       ${r.instructions.split(/\r?\n+/).filter(Boolean).map((p) => `<p>${esc(p)}</p>`).join("") || "<p>Instructions not available.</p>"}
     </div>`;
+  const servingsInput = $("#servings");
+  const getServings = () => Math.min(20, Math.max(1, parseInt(servingsInput.value, 10) || BASE_SERVINGS));
+  renderIngredients(r, getServings());
+  servingsInput.addEventListener("input", () => renderIngredients(r, getServings()));
+  $("#add-plan").addEventListener("click", () => {
+    addToPlan($("#plan-day").value, r, getServings());
+    status(`Added ${r.title} to ${$("#plan-day").value}. View it in the meal planner.`);
+  });
 }
 
 $("#recipe-grid") ? initHome() : initDetail();
