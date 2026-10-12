@@ -1,64 +1,346 @@
-:root { --green: #2E7D32; --orange: #F57C00; --dark: #212121; --light: #F9F9F9; --border: #e2e2e2; }
-* { box-sizing: border-box; }
-body { margin: 0; font-family: "Inter", "Roboto", sans-serif; color: var(--dark); background: var(--light); line-height: 1.5; }
-h1, h2, .logo { font-family: "Poppins", sans-serif; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+:root {
+    --green: #2E7D32;
+    --orange: #F57C00;
+    --dark: #212121;
+    --light: #F9F9F9;
+    --border: #e2e2e2;
+}
 
-.site-header { display: flex; align-items: center; gap: 1rem; padding: .75rem 1.5rem; background: var(--green); color: #fff; }
-.logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
-.search { flex: 1; display: flex; gap: .5rem; max-width: 560px; }
-.search input { flex: 1; padding: .6rem .8rem; border: 0; border-radius: 6px; font: inherit; }
-button, .view, .back { font: inherit; cursor: pointer; border-radius: 6px; padding: .55rem 1rem; border: 2px solid transparent; }
-.search button { background: var(--orange); color: #fff; font-weight: 600; }
-nav button, .back { background: transparent; color: #fff; border-color: #fff; text-decoration: none; }
-nav button[aria-pressed="true"] { background: #fff; color: var(--green); }
+* {
+    box-sizing: border-box;
+}
 
-main { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
-.filters { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
-.filters select { padding: .5rem; font: inherit; border-radius: 6px; border: 1px solid var(--border); }
-#status { min-height: 1.5rem; color: #555; }
+body {
+    margin: 0;
+    font-family: "Inter", "Roboto", sans-serif;
+    color: var(--dark);
+    background: var(--light);
+    line-height: 1.5;
+}
 
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-.card { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
-.card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
-.card-body { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; flex: 1; }
-.card h2 { font-size: 1.05rem; margin: 0 0 .25rem; }
-.meta { margin: 0 0 .75rem; color: #666; font-size: .9rem; }
-.actions { display: flex; gap: .5rem; margin-top: auto; }
-.save { background: #fff; color: var(--green); border-color: var(--green); }
-.save.on { background: var(--green); color: #fff; }
-.view { background: var(--orange); color: #fff; text-decoration: none; font-weight: 600; }
+h1,
+h2,
+.logo {
+    font-family: "Poppins", sans-serif;
+}
 
-.detail { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.detail img { width: 100%; border-radius: 10px; }
-.detail h1 { margin: 0 0 .25rem; }
-.instructions { grid-column: 1 / -1; max-width: 70ch; }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 1.5rem;
+    background: var(--green);
+    color: #fff;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+
+.search {
+    flex: 1;
+    display: flex;
+    gap: .5rem;
+    max-width: 560px;
+}
+
+.search input {
+    flex: 1;
+    padding: .6rem .8rem;
+    border: 0;
+    border-radius: 6px;
+    font: inherit;
+}
+
+button,
+.view,
+.back {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: .55rem 1rem;
+    border: 2px solid transparent;
+}
+
+.search button {
+    background: var(--orange);
+    color: #fff;
+    font-weight: 600;
+}
+
+nav button,
+.back {
+    background: transparent;
+    color: #fff;
+    border-color: #fff;
+    text-decoration: none;
+}
+
+nav button[aria-pressed="true"] {
+    background: #fff;
+    color: var(--green);
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .5rem;
+}
+
+.filters select {
+    padding: .5rem;
+    font: inherit;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+}
+
+#status {
+    min-height: 1.5rem;
+    color: #555;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: .9rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card h2 {
+    font-size: 1.05rem;
+    margin: 0 0 .25rem;
+}
+
+.meta {
+    margin: 0 0 .75rem;
+    color: #666;
+    font-size: .9rem;
+}
+
+.actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: auto;
+}
+
+.save {
+    background: #fff;
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.save.on {
+    background: var(--green);
+    color: #fff;
+}
+
+.view {
+    background: var(--orange);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.detail img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.detail h1 {
+    margin: 0 0 .25rem;
+}
+
+.instructions {
+    grid-column: 1 / -1;
+    max-width: 70ch;
+}
 
 /* Week 6: planner, grocery list, detail controls */
-.page-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-.plan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; }
-.day { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: .75rem 1rem; min-height: 120px; }
-.day h2 { font-size: 1rem; margin: 0 0 .5rem; color: var(--green); }
-.planned { padding: .4rem 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: .2rem; }
-.planned a { color: var(--dark); font-weight: 500; }
-.remove { align-self: flex-start; background: none; color: #b3261e; border: 0; padding: 0; text-decoration: underline; }
-.empty { color: #777; font-size: .9rem; margin: 0; }
-.grocery-title { margin-top: 2rem; }
-.grocery { list-style: none; padding: 0; max-width: 70ch; }
-.grocery li { padding: .4rem 0; border-bottom: 1px solid var(--border); }
-.grocery input:checked + span { text-decoration: line-through; color: #777; }
-.controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: end; margin: .75rem 0 1rem; }
-.controls label { display: flex; flex-direction: column; font-size: .9rem; gap: .2rem; }
-.controls input, .controls select { padding: .45rem; font: inherit; border: 1px solid var(--border); border-radius: 6px; width: 7rem; }
-
-/* Animation: recipe cards fade up when they appear; cards and buttons react to hover */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: none; }
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
-.card { animation: fade-up 0.4s ease both; transition: transform 0.25s ease, box-shadow 0.25s ease; }
-.card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); }
-button, .view, .back { transition: opacity 0.2s ease, transform 0.2s ease; }
-button:hover, .view:hover, .back:hover { opacity: 0.88; }
-button:active, .view:active { transform: scale(0.97); }
+
+.plan-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.day {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .75rem 1rem;
+    min-height: 120px;
+}
+
+.day h2 {
+    font-size: 1rem;
+    margin: 0 0 .5rem;
+    color: var(--green);
+}
+
+.planned {
+    padding: .4rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.planned a {
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.remove {
+    align-self: flex-start;
+    background: none;
+    color: #b3261e;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.empty {
+    color: #777;
+    font-size: .9rem;
+    margin: 0;
+}
+
+.grocery-title {
+    margin-top: 2rem;
+}
+
+.grocery {
+    list-style: none;
+    padding: 0;
+    max-width: 70ch;
+}
+
+.grocery li {
+    padding: .4rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.grocery input:checked+span {
+    text-decoration: line-through;
+    color: #777;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    align-items: end;
+    margin: .75rem 0 1rem;
+}
+
+.controls label {
+    display: flex;
+    flex-direction: column;
+    font-size: .9rem;
+    gap: .2rem;
+}
+
+.controls input,
+.controls select {
+    padding: .45rem;
+    font: inherit;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    width: 7rem;
+}
+
+/* Interactive card transitions */
+.card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+button,
+.view,
+.back {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+button:hover,
+.view:hover,
+.back:hover {
+    opacity: 0.88;
+}
+
+button:active,
+.view:active {
+    transform: scale(0.97);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

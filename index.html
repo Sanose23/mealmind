@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Search recipes by dish or ingredient, save favorites, and plan your meals with MealMind.">
+  <meta name="description"
+    content="Search recipes by dish or ingredient, save favorites, and plan your meals with MealMind.">
   <title>MealMind – Recipe &amp; Meal Prep Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/responsive.css">
 </head>
+
 <body>
   <header class="site-header">
     <a class="logo" href="index.html">MealMind</a>
@@ -21,14 +25,17 @@
     </form>
     <nav>
       <a class="back" href="meal-planner.html">Meal planner</a>
-      <button id="favorites-toggle" type="button" aria-pressed="false">Favorites (<span id="fav-count">0</span>)</button>
+      <button id="favorites-toggle" type="button" aria-pressed="false">Favorites (<span
+          id="fav-count">0</span>)</button>
     </nav>
   </header>
 
   <main>
     <section class="filters" aria-label="Filters">
       <label for="category-filter">Meal type</label>
-      <select id="category-filter"><option value="">All meal types</option></select>
+      <select id="category-filter">
+        <option value="">All meal types</option>
+      </select>
     </section>
     <p id="status" role="status" aria-live="polite"></p>
     <section id="recipe-grid" class="grid" aria-label="Recipes"></section>
@@ -36,4 +43,5 @@
 
   <script type="module" src="js/app.js"></script>
 </body>
+
 </html>
