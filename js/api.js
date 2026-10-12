@@ -70,3 +70,26 @@ export const getFallbackRecipes = () => loadMock();
 export async function getFallbackRecipe(id) {
   return (await loadMock()).find((r) => r.id === String(id)) || null;
 }
+
+// ---- Second third-party API: Open Food Facts (free, no key) ----
+// Returns nutrition per 100 g for an ingredient, or null if nothing useful is found.
+const OFF = "https://world.openfoodfacts.org/cgi/search.pl";
+
+export async function getNutrition(ingredient) {
+  const q = encodeURIComponent(ingredient.trim());
+  const data = await getJSON(
+    `${OFF}?search_terms=${q}&search_simple=1&action=process&json=1&page_size=10&fields=product_name,nutriments`
+  );
+  const product = (data.products || []).find(
+    (p) => p.nutriments && p.nutriments["energy-kcal_100g"] !== undefined
+  );
+  if (!product) return null;
+  const n = product.nutriments;
+  return {
+    name: product.product_name || ingredient,
+    calories: n["energy-kcal_100g"],
+    protein: n.proteins_100g ?? 0,
+    fat: n.fat_100g ?? 0,
+    carbs: n.carbohydrates_100g ?? 0,
+  };
+}

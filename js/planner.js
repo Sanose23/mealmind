@@ -1,10 +1,9 @@
 // planner.js – weekly meal plan, grocery list, and serving-size scaling
 import { DAYS, getPlan, savePlan, getChecked, saveChecked } from "./storage.js";
+import { esc } from "./utils.js";
 
 export const BASE_SERVINGS = 4;   // the API does not give servings, so recipes are treated as serving 4
 
-const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) =>
-  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 // "1 1/2 cups" scaled by 2 -> "3 cups". Text with no leading number is returned unchanged.
 export function scaleMeasure(measure, factor) {

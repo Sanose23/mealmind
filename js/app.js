@@ -1,16 +1,18 @@
 // app.js – page logic. One module serves both index.html and recipe-details.html.
 import { getCategories, searchRecipes, filterByCategory, getRecipe,
-         getFallbackRecipes, getFallbackRecipe } from "./api.js";
+         getFallbackRecipes, getFallbackRecipe, getNutrition } from "./api.js";
 import { addToPlan, scaleMeasure, BASE_SERVINGS } from "./planner.js";
 import { DAYS, getFavorites, isFavorite, toggleFavorite } from "./storage.js";
+import { esc } from "./utils.js";
 
 const $ = (sel) => document.querySelector(sel);
 const status = (msg) => { const el = $("#status"); if (el) el.textContent = msg; };
-const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) =>
-  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 let current = [];
 let showingFavs = false;
+let requestId = 0;                                   // ignores slow, outdated responses
+let lastTask = () => searchRecipes("chicken");       // remembered so Favorites can go "back"
+let lastLabel = '"chicken"';
 
 /* ---------- Home page ---------- */
 function renderCards(recipes) {
@@ -33,17 +35,29 @@ function renderCards(recipes) {
 }
 
 async function run(task, label) {
+  const myRequest = ++requestId;
+  lastTask = task;
+  lastLabel = label;
   status("Loading recipes...");
   showingFavs = false;
   $("#favorites-toggle").setAttribute("aria-pressed", "false");
+  let results;
   try {
-    current = await task();
+    results = await task();
   } catch {
-    current = await getFallbackRecipes();
+    if (myRequest !== requestId) return;
+    try {
+      current = await getFallbackRecipes();
+      status("Could not reach the recipe service. Showing sample recipes instead.");
+    } catch {
+      current = [];
+      status("Could not load recipes. Please check your connection and try again.");
+    }
     renderCards(current);
-    status("Could not reach the recipe service. Showing sample recipes instead.");
     return;
   }
+  if (myRequest !== requestId) return;   // a newer search already replaced this one
+  current = results;
   renderCards(current);
   status(current.length ? `${current.length} recipes for ${label}.`
                         : `No recipes found for ${label}. Try another dish or ingredient.`);
@@ -86,7 +100,7 @@ async function initHome() {
   });
 
   $("#favorites-toggle").addEventListener("click", () => {
-    showingFavs ? run(() => searchRecipes("chicken"), '"chicken"') : showFavorites();
+    showingFavs ? run(lastTask, lastLabel) : showFavorites();
   });
 
   run(() => searchRecipes("chicken"), '"chicken"');
@@ -105,7 +119,11 @@ async function initDetail() {
   if (!id) { status("No recipe selected. Go back to search and pick one."); return; }
   status("Loading recipe...");
   let r;
-  try { r = await getRecipe(id); } catch { r = await getFallbackRecipe(id); }
+  try {
+    r = await getRecipe(id);
+  } catch {
+    try { r = await getFallbackRecipe(id); } catch { r = null; }
+  }
   if (!r) { status("That recipe could not be found."); return; }
   document.title = `${r.title} – MealMind`;
   status("");
@@ -121,6 +139,13 @@ async function initDetail() {
       </div>
       <h2>Ingredients</h2>
       <ul id="ingredient-list"></ul>
+      ${r.ingredients.length ? `
+      <h2>Nutrition (per 100 g)</h2>
+      <div class="controls">
+        <label>Ingredient <select id="nutrition-ingredient">${r.ingredients.map((i) => `<option>${esc(i.name)}</option>`).join("")}</select></label>
+        <button type="button" id="nutrition-btn" class="view">Look up</button>
+      </div>
+      <p id="nutrition-result" class="meta" role="status" aria-live="polite"></p>` : ""}
     </div>
     <div class="instructions">
       <h2>Instructions</h2>
@@ -134,6 +159,24 @@ async function initDetail() {
     addToPlan($("#plan-day").value, r, getServings());
     status(`Added ${r.title} to ${$("#plan-day").value}. View it in the meal planner.`);
   });
+
+  // Second API (Open Food Facts): look up nutrition for the chosen ingredient.
+  const nutritionBtn = $("#nutrition-btn");
+  if (nutritionBtn) {
+    nutritionBtn.addEventListener("click", async () => {
+      const out = $("#nutrition-result");
+      const name = $("#nutrition-ingredient").value;
+      out.textContent = "Looking up nutrition...";
+      try {
+        const n = await getNutrition(name);
+        out.textContent = n
+          ? `${n.name}: ${Math.round(n.calories)} kcal, ${n.protein} g protein, ${n.fat} g fat, ${n.carbs} g carbs.`
+          : `No nutrition data found for ${name}.`;
+      } catch {
+        out.textContent = "Nutrition service unavailable. Please try again later.";
+      }
+    });
+  }
 }
 
 $("#recipe-grid") ? initHome() : initDetail();
